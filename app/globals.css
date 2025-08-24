@@ -186,4 +186,26 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Ensure proper scrolling behavior */
+  html {
+    height: 100%;
+  }
+
+  body {
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Dashboard specific scrolling */
+  .dashboard-content {
+    overflow-y: auto;
+    height: 100%;
+  }
+
+  /* Main page scrolling */
+  .main-page {
+    min-height: 100vh;
+    overflow-y: auto;
+  }
 }

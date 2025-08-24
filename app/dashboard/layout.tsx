@@ -75,7 +75,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       </div>
 
       {/* Main content */}
-      <div className="flex flex-col flex-1 overflow-hidden">{children}</div>
+      <div className="flex flex-col flex-1 overflow-y-auto dashboard-content">
+        {children}
+      </div>
     </div>
   )
 }
