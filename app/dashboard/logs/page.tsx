@@ -112,7 +112,7 @@ export default function MonitoringLogsPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [riskFilter, setRiskFilter] = useState('all')
   const [categoryFilter, setCategoryFilter] = useState('all')
-  const [activeTab, setActiveTab] = useState('all')
+  // const [activeTab, setActiveTab] = useState('all')
 
   const getRiskColor = (risk: string) => {
     switch (risk) {
@@ -373,7 +373,7 @@ export default function MonitoringLogsPage() {
           <Card>
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium">
-                Today's Activity
+                Today&apos;s Activity
               </CardTitle>
             </CardHeader>
             <CardContent>
