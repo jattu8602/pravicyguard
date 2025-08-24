@@ -1,6 +1,13 @@
 'use client'
 
 import type React from 'react'
+import { useEffect, useState } from 'react'
+import { useRouter, usePathname } from 'next/navigation'
+import Link from 'next/link'
+import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
+import { useToast } from '@/lib/toast-context'
+
 import {
   Shield,
   Home,
@@ -11,10 +18,6 @@ import {
   FileText,
   LogOut,
 } from 'lucide-react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: Home },
@@ -30,7 +33,51 @@ interface DashboardLayoutProps {
 }
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
+  const [dummyUser, setDummyUser] = useState<any>(null)
+  const router = useRouter()
   const pathname = usePathname()
+  const { showInfo } = useToast()
+
+  // Check login status
+  useEffect(() => {
+    const storedUser = localStorage.getItem('dummyUser')
+    if (
+      !storedUser &&
+      !pathname.includes('/login') &&
+      !pathname.includes('/register')
+    ) {
+      showInfo('Please log in to access the dashboard')
+      router.push('/dashboard/login')
+      return
+    }
+
+    if (storedUser) {
+      setDummyUser(JSON.parse(storedUser))
+    }
+  }, [pathname, router, showInfo])
+
+  const handleLogout = () => {
+    localStorage.removeItem('dummyUser')
+    showInfo('Logged out successfully')
+    router.push('/dashboard/login')
+  }
+
+  // Skip layout for login/register pages
+  if (pathname.includes('/login') || pathname.includes('/register')) {
+    return <>{children}</>
+  }
+
+  // Loading screen
+  if (!dummyUser) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading dashboard...</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="flex h-screen bg-background">
@@ -87,11 +134,13 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               </span>
             </div>
             <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="sm">
-                <Settings className="h-4 w-4 mr-2" />
-                Settings
-              </Button>
-              <Button variant="ghost" size="sm">
+              <div className="text-right hidden sm:block">
+                <p className="text-sm text-muted-foreground">Logged in as</p>
+                <p className="font-medium text-foreground">
+                  {dummyUser.username || dummyUser.email}
+                </p>
+              </div>
+              <Button variant="ghost" size="sm" onClick={handleLogout}>
                 <LogOut className="h-4 w-4 mr-2" />
                 Sign Out
               </Button>

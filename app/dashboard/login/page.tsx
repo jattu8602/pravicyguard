@@ -3,6 +3,7 @@
 import type React from 'react'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -15,18 +16,54 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Shield, Eye, EyeOff, Chrome, Globe } from 'lucide-react'
 import Link from 'next/link'
+import { useToast } from '@/lib/toast-context'
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
-    username: '',
+    email: '',
     password: '',
   })
+  const router = useRouter()
+  const { showSuccess, showError } = useToast()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle login logic here
-    console.log('Login attempt:', formData)
+
+    if (!formData.email || !formData.password) {
+      showError('Please fill in all fields')
+      return
+    }
+
+    setIsLoading(true)
+
+    // Simulate API call delay
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+
+    // Dummy authentication - accept any email
+    if (formData.email.includes('@')) {
+      // Store dummy user data in localStorage for settings page
+      localStorage.setItem(
+        'dummyUser',
+        JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+          loginTime: new Date().toISOString(),
+        })
+      )
+
+      showSuccess(`Welcome back! Logged in as ${formData.email}`)
+
+      // Redirect to dashboard
+      setTimeout(() => {
+        router.push('/dashboard')
+      }, 1000)
+    } else {
+      showError('Please enter a valid email address')
+    }
+
+    setIsLoading(false)
   }
 
   return (
@@ -56,16 +93,16 @@ export default function LoginPage() {
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="username">Username</Label>
+                <Label htmlFor="email">Email</Label>
                 <Input
-                  id="username"
-                  type="text"
-                  placeholder="Enter your username"
-                  value={formData.username}
+                  id="email"
+                  type="email"
+                  placeholder="Enter your email"
+                  value={formData.email}
                   onChange={(e) =>
                     setFormData((prev) => ({
                       ...prev,
-                      username: e.target.value,
+                      email: e.target.value,
                     }))
                   }
                   required
@@ -104,8 +141,8 @@ export default function LoginPage() {
                 </div>
               </div>
 
-              <Button type="submit" className="w-full">
-                Sign In
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? 'Signing In...' : 'Sign In'}
               </Button>
             </form>
 
@@ -135,7 +172,7 @@ export default function LoginPage() {
 
             <div className="mt-4 text-center">
               <Link
-                href="/register"
+                href="/dashboard/register"
                 className="text-sm text-primary hover:underline"
               >
                 Don&apos;t have an account? Sign up

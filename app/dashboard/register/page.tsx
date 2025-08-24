@@ -3,6 +3,7 @@
 import type React from 'react'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -15,21 +16,74 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Shield, Eye, EyeOff, CheckCircle } from 'lucide-react'
 import Link from 'next/link'
+import { useToast } from '@/lib/toast-context'
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
     username: '',
     email: '',
     password: '',
     confirmPassword: '',
   })
+  const router = useRouter()
+  const { showSuccess, showError } = useToast()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle registration logic here
-    console.log('Registration attempt:', formData)
+
+    if (
+      !formData.username ||
+      !formData.email ||
+      !formData.password ||
+      !formData.confirmPassword
+    ) {
+      showError('Please fill in all fields')
+      return
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      showError('Passwords do not match')
+      return
+    }
+
+    if (formData.password.length < 6) {
+      showError('Password must be at least 6 characters long')
+      return
+    }
+
+    if (!formData.email.includes('@')) {
+      showError('Please enter a valid email address')
+      return
+    }
+
+    setIsLoading(true)
+
+    // Simulate API call delay
+    await new Promise((resolve) => setTimeout(resolve, 1500))
+
+    // Dummy registration - always successful
+    showSuccess('Account created successfully! Welcome to Privacy Guard!')
+
+    // Store dummy user data in localStorage for settings page
+    localStorage.setItem(
+      'dummyUser',
+      JSON.stringify({
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+        registrationTime: new Date().toISOString(),
+      })
+    )
+
+    // Redirect to login page after showing success message
+    setTimeout(() => {
+      router.push('/dashboard/login')
+    }, 2000)
+
+    setIsLoading(false)
   }
 
   return (
@@ -151,8 +205,8 @@ export default function RegisterPage() {
                 </div>
               </div>
 
-              <Button type="submit" className="w-full">
-                Create Account
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? 'Creating Account...' : 'Create Account'}
               </Button>
             </form>
 
@@ -180,7 +234,7 @@ export default function RegisterPage() {
 
             <div className="mt-4 text-center">
               <Link
-                href="/login"
+                href="/dashboard/login"
                 className="text-sm text-primary hover:underline"
               >
                 Already have an account? Sign in

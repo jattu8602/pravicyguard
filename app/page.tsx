@@ -49,133 +49,143 @@ export default function HomePage() {
 
   useEffect(() => {
     // Optimize GSAP performance
-    gsap.set(".gsap-animate", { clearProps: "all" })
-    
+    gsap.set('.gsap-animate', { clearProps: 'all' })
+
     // Header animation - simple fade in
-    gsap.fromTo(headerRef.current,
+    gsap.fromTo(
+      headerRef.current,
       { opacity: 0, y: -20 },
-      { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
+      { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }
     )
 
     // Hero section animation - simplified
     if (heroRef.current) {
-      gsap.fromTo(heroRef.current.children,
+      gsap.fromTo(
+        heroRef.current.children,
         { opacity: 0, y: 30 },
-        { 
-          opacity: 1, 
-          y: 0, 
+        {
+          opacity: 1,
+          y: 0,
           duration: 0.6,
           stagger: 0.1,
-          ease: "power2.out" 
+          ease: 'power2.out',
         }
       )
     }
 
     // Stats animation - optimized
     if (statsRef.current) {
-      gsap.fromTo(statsRef.current.children,
+      gsap.fromTo(
+        statsRef.current.children,
         { opacity: 0, y: 50 },
-        { 
-          opacity: 1, 
+        {
+          opacity: 1,
           y: 0,
           duration: 0.5,
           stagger: 0.1,
-          ease: "power2.out",
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: statsRef.current,
-            start: "top 85%",
-            toggleActions: "play none none none"
-          }
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
         }
       )
     }
 
     // Features animation - simplified
     if (featuresRef.current) {
-      gsap.fromTo(featuresRef.current.children,
+      gsap.fromTo(
+        featuresRef.current.children,
         { opacity: 0, y: 40 },
-        { 
-          opacity: 1, 
+        {
+          opacity: 1,
           y: 0,
           duration: 0.5,
           stagger: 0.1,
-          ease: "power2.out",
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: featuresRef.current,
-            start: "top 80%",
-            toggleActions: "play none none none"
-          }
+            start: 'top 80%',
+            toggleActions: 'play none none none',
+          },
         }
       )
     }
 
     // Testimonials animation - simplified
     if (testimonialsRef.current) {
-      gsap.fromTo(testimonialsRef.current.children,
+      gsap.fromTo(
+        testimonialsRef.current.children,
         { opacity: 0, y: 40 },
-        { 
-          opacity: 1, 
+        {
+          opacity: 1,
           y: 0,
           duration: 0.5,
           stagger: 0.1,
-          ease: "power2.out",
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: testimonialsRef.current,
-            start: "top 80%",
-            toggleActions: "play none none none"
-          }
+            start: 'top 80%',
+            toggleActions: 'play none none none',
+          },
         }
       )
     }
 
     // How it works animation - simplified
     if (howItWorksRef.current) {
-      gsap.fromTo(howItWorksRef.current.children,
+      gsap.fromTo(
+        howItWorksRef.current.children,
         { opacity: 0, y: 40 },
-        { 
-          opacity: 1, 
+        {
+          opacity: 1,
           y: 0,
           duration: 0.5,
           stagger: 0.15,
-          ease: "power2.out",
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: howItWorksRef.current,
-            start: "top 80%",
-            toggleActions: "play none none none"
-          }
+            start: 'top 80%',
+            toggleActions: 'play none none none',
+          },
         }
       )
     }
 
     // CTA animation - simplified
     if (ctaRef.current) {
-      gsap.fromTo(ctaRef.current.children,
+      gsap.fromTo(
+        ctaRef.current.children,
         { opacity: 0, y: 30 },
-        { 
-          opacity: 1, 
-          y: 0, 
+        {
+          opacity: 1,
+          y: 0,
           duration: 0.6,
           stagger: 0.1,
-          ease: "power2.out",
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: ctaRef.current,
-            start: "top 85%",
-            toggleActions: "play none none none"
-          }
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
         }
       )
     }
 
     // Cleanup function
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
     }
   }, [])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
       {/* Header */}
-      <header ref={headerRef} className="border-b bg-card/80 backdrop-blur-md sticky top-0 z-50 transition-all duration-300 hover:bg-card/90">
+      <header
+        ref={headerRef}
+        className="border-b bg-card/80 backdrop-blur-md sticky top-0 z-50 transition-all duration-300 hover:bg-card/90"
+      >
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-3 group cursor-pointer">
             <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors duration-300">
@@ -186,10 +196,8 @@ export default function HomePage() {
             </span>
           </div>
           <div className="flex items-center space-x-4">
-            <Link href="/login">
-              
-            </Link>
-            <Link href="/dashboard">
+            <Link href="/login"></Link>
+            <Link href="/dashboard/login">
               <Button className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-lg px-6 py-3">
                 Dashboard
               </Button>
@@ -221,8 +229,11 @@ export default function HomePage() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-8 justify-center">
-            <Link href="/register">
-              <Button size="lg" className="w-full sm:w-auto bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-xl px-10 py-8 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300">
+            <Link href="/dashboard/register">
+              <Button
+                size="lg"
+                className="w-full sm:w-auto bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-xl px-10 py-8 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
+              >
                 <Zap className="h-6 w-6 mr-3" />
                 Start Free Monitoring
               </Button>
@@ -259,7 +270,10 @@ export default function HomePage() {
       {/* Stats Section */}
       <section className="py-20 px-4 bg-gradient-to-r from-muted/30 via-background to-muted/30">
         <div className="container mx-auto">
-          <div ref={statsRef} className="grid grid-cols-2 md:grid-cols-4 gap-10">
+          <div
+            ref={statsRef}
+            className="grid grid-cols-2 md:grid-cols-4 gap-10"
+          >
             <div className="text-center group">
               <div className="text-4xl md:text-5xl font-bold text-primary mb-3 group-hover:scale-110 transition-transform duration-300">
                 50K+
@@ -270,7 +284,9 @@ export default function HomePage() {
               <div className="text-4xl md:text-5xl font-bold text-accent mb-3 group-hover:scale-110 transition-transform duration-300">
                 1M+
               </div>
-              <div className="text-lg text-muted-foreground">Threats Blocked</div>
+              <div className="text-lg text-muted-foreground">
+                Threats Blocked
+              </div>
             </div>
             <div className="text-center group">
               <div className="text-4xl md:text-5xl font-bold text-chart-3 mb-3 group-hover:scale-110 transition-transform duration-300">
@@ -300,7 +316,10 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div ref={featuresRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div
+            ref={featuresRef}
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
             <Card className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-0 bg-gradient-to-br from-card to-card/80 backdrop-blur-sm">
               <CardHeader className="pb-4">
                 <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-200 mb-4">
@@ -313,7 +332,8 @@ export default function HomePage() {
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  Monitor website activities, detect data collection attempts, and identify suspicious patterns with precision.
+                  Monitor website activities, detect data collection attempts,
+                  and identify suspicious patterns with precision.
                 </p>
                 <div className="mt-4 flex items-center text-primary font-medium text-sm group-hover:translate-x-1 transition-transform duration-200">
                   Learn more <ArrowRight className="h-4 w-4 ml-1" />
@@ -333,7 +353,8 @@ export default function HomePage() {
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  Machine learning algorithms detect when websites attempt to collect sensitive personal information.
+                  Machine learning algorithms detect when websites attempt to
+                  collect sensitive personal information.
                 </p>
                 <div className="mt-4 flex items-center text-accent font-medium text-sm group-hover:translate-x-1 transition-transform duration-200">
                   Learn more <ArrowRight className="h-4 w-4 ml-1" />
@@ -353,7 +374,8 @@ export default function HomePage() {
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  Get immediate guidance on clearing cookies, revoking permissions, and finding safer alternatives.
+                  Get immediate guidance on clearing cookies, revoking
+                  permissions, and finding safer alternatives.
                 </p>
                 <div className="mt-4 flex items-center text-chart-3 font-medium text-sm group-hover:translate-x-1 transition-transform duration-200">
                   Learn more <ArrowRight className="h-4 w-4 ml-1" />
@@ -373,7 +395,8 @@ export default function HomePage() {
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  Detailed analytics showing your privacy score, data exposure trends, and security recommendations.
+                  Detailed analytics showing your privacy score, data exposure
+                  trends, and security recommendations.
                 </p>
                 <div className="mt-4 flex items-center text-chart-1 font-medium text-sm group-hover:translate-x-1 transition-transform duration-200">
                   Learn more <ArrowRight className="h-4 w-4 ml-1" />
@@ -393,7 +416,8 @@ export default function HomePage() {
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  Detect insecure connections, get VPN recommendations, and maintain encrypted browsing practices.
+                  Detect insecure connections, get VPN recommendations, and
+                  maintain encrypted browsing practices.
                 </p>
                 <div className="mt-4 flex items-center text-chart-2 font-medium text-sm group-hover:translate-x-1 transition-transform duration-200">
                   Learn more <ArrowRight className="h-4 w-4 ml-1" />
@@ -413,7 +437,8 @@ export default function HomePage() {
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  Monitor for identity theft attempts, data breaches, and suspicious activities that could compromise your data.
+                  Monitor for identity theft attempts, data breaches, and
+                  suspicious activities that could compromise your data.
                 </p>
                 <div className="mt-4 flex items-center text-chart-4 font-medium text-sm group-hover:translate-x-1 transition-transform duration-200">
                   Learn more <ArrowRight className="h-4 w-4 ml-1" />
@@ -441,19 +466,28 @@ export default function HomePage() {
               <CardContent className="pt-6">
                 <div className="flex items-center space-x-1 mb-4">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                    <Star
+                      key={i}
+                      className="h-4 w-4 fill-yellow-400 text-yellow-400"
+                    />
                   ))}
                 </div>
                 <p className="text-muted-foreground mb-4 italic text-sm leading-relaxed">
-                  &ldquo;Privacy Guard has completely transformed how I browse the web. The real-time alerts and remediation guides are incredibly helpful.&rdquo;
+                  &ldquo;Privacy Guard has completely transformed how I browse
+                  the web. The real-time alerts and remediation guides are
+                  incredibly helpful.&rdquo;
                 </p>
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
                     <Users className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <div className="font-semibold text-foreground">Sarah Chen</div>
-                    <div className="text-sm text-muted-foreground">Software Engineer</div>
+                    <div className="font-semibold text-foreground">
+                      Sarah Chen
+                    </div>
+                    <div className="text-sm text-muted-foreground">
+                      Software Engineer
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -463,19 +497,28 @@ export default function HomePage() {
               <CardContent className="pt-6">
                 <div className="flex items-center space-x-1 mb-4">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                    <Star
+                      key={i}
+                      className="h-4 w-4 fill-yellow-400 text-yellow-400"
+                    />
                   ))}
                 </div>
                 <p className="text-muted-foreground mb-4 italic text-sm leading-relaxed">
-                  &ldquo;The AI detection is incredibly accurate. It caught several data collection attempts I never would have noticed.&rdquo;
+                  &ldquo;The AI detection is incredibly accurate. It caught
+                  several data collection attempts I never would have
+                  noticed.&rdquo;
                 </p>
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-accent/10 rounded-full flex items-center justify-center">
                     <Users className="h-5 w-5 text-accent" />
                   </div>
                   <div>
-                    <div className="font-semibold text-foreground">Michael Rodriguez</div>
-                    <div className="text-sm text-muted-foreground">Privacy Consultant</div>
+                    <div className="font-semibold text-foreground">
+                      Michael Rodriguez
+                    </div>
+                    <div className="text-sm text-muted-foreground">
+                      Privacy Consultant
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -485,19 +528,28 @@ export default function HomePage() {
               <CardContent className="pt-6">
                 <div className="flex items-center space-x-1 mb-4">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                    <Star
+                      key={i}
+                      className="h-4 w-4 fill-yellow-400 text-yellow-400"
+                    />
                   ))}
                 </div>
                 <p className="text-muted-foreground mb-4 italic text-sm leading-relaxed">
-                  &ldquo;As someone who works with sensitive data, Privacy Guard gives me peace of mind. The browser extension is seamless.&rdquo;
+                  &ldquo;As someone who works with sensitive data, Privacy Guard
+                  gives me peace of mind. The browser extension is
+                  seamless.&rdquo;
                 </p>
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-chart-3/10 rounded-full flex items-center justify-center">
                     <Users className="h-5 w-5 text-chart-3" />
                   </div>
                   <div>
-                    <div className="font-semibold text-foreground">Emily Watson</div>
-                    <div className="text-sm text-muted-foreground">Data Analyst</div>
+                    <div className="font-semibold text-foreground">
+                      Emily Watson
+                    </div>
+                    <div className="text-sm text-muted-foreground">
+                      Data Analyst
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -523,9 +575,11 @@ export default function HomePage() {
               <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-8 group-hover:bg-primary/20 transition-colors duration-300">
                 <Download className="h-10 w-10 text-primary" />
               </div>
-              <h3 className="text-2xl font-semibold text-foreground mb-6">1. Install Extension</h3>
+              <h3 className="text-2xl font-semibold text-foreground mb-6">
+                1. Install Extension
+              </h3>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Download and install our browser extension in just a few clicks. 
+                Download and install our browser extension in just a few clicks.
                 Works with Chrome, Firefox, Safari, and Edge.
               </p>
             </div>
@@ -534,10 +588,13 @@ export default function HomePage() {
               <div className="w-20 h-20 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-8 group-hover:bg-accent/20 transition-colors duration-300">
                 <Monitor className="h-10 w-10 text-accent" />
               </div>
-              <h3 className="text-2xl font-semibold text-foreground mb-6">2. Start Monitoring</h3>
+              <h3 className="text-2xl font-semibold text-foreground mb-6">
+                2. Start Monitoring
+              </h3>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                The extension automatically begins monitoring your browsing activity,
-                detecting privacy risks and data collection attempts in real-time.
+                The extension automatically begins monitoring your browsing
+                activity, detecting privacy risks and data collection attempts
+                in real-time.
               </p>
             </div>
 
@@ -545,10 +602,13 @@ export default function HomePage() {
               <div className="w-20 h-20 bg-chart-3/10 rounded-full flex items-center justify-center mx-auto mb-8 group-hover:bg-chart-3/20 transition-colors duration-300">
                 <Shield className="h-10 w-10 text-chart-3" />
               </div>
-              <h3 className="text-2xl font-semibold text-foreground mb-6">3. Stay Protected</h3>
+              <h3 className="text-2xl font-semibold text-foreground mb-6">
+                3. Stay Protected
+              </h3>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Receive instant alerts, view detailed analytics, and get step-by-step
-                guidance to protect your privacy across all websites.
+                Receive instant alerts, view detailed analytics, and get
+                step-by-step guidance to protect your privacy across all
+                websites.
               </p>
             </div>
           </div>
@@ -556,7 +616,10 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section ref={ctaRef} className="py-32 px-4 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5">
+      <section
+        ref={ctaRef}
+        className="py-32 px-4 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5"
+      >
         <div className="container mx-auto text-center space-y-12">
           <div className="space-y-8">
             <h2 className="text-5xl font-bold text-foreground">
@@ -569,21 +632,30 @@ export default function HomePage() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link href="/register">
-              <Button size="lg" className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-xl px-10 py-8 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300">
+            <Link href="/dashboard/register">
+              <Button
+                size="lg"
+                className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-xl px-10 py-8 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
+              >
                 <Shield className="h-6 w-6 mr-3" />
                 Get Started Free
               </Button>
             </Link>
             <Link href="/pricing">
-              <Button variant="outline" size="lg" className="text-xl px-10 py-8 border-2 hover:bg-primary/5 transition-all duration-300">
+              <Button
+                variant="outline"
+                size="lg"
+                className="text-xl px-10 py-8 border-2 hover:bg-primary/5 transition-all duration-300"
+              >
                 View Pricing
               </Button>
             </Link>
           </div>
 
           <div className="text-lg text-muted-foreground">
-            <p>✓ No credit card required • ✓ 30-day free trial • ✓ Cancel anytime</p>
+            <p>
+              ✓ No credit card required • ✓ 30-day free trial • ✓ Cancel anytime
+            </p>
           </div>
         </div>
       </section>
@@ -595,46 +667,76 @@ export default function HomePage() {
             <div className="space-y-6">
               <div className="flex items-center space-x-3">
                 <Shield className="h-7 w-7 text-primary" />
-                <span className="text-2xl font-bold text-foreground">Privacy Guard</span>
+                <span className="text-2xl font-bold text-foreground">
+                  Privacy Guard
+                </span>
               </div>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Protecting your digital privacy with advanced AI-powered monitoring and real-time threat detection.
+                Protecting your digital privacy with advanced AI-powered
+                monitoring and real-time threat detection.
               </p>
             </div>
-            
+
             <div className="space-y-6">
               <h4 className="font-semibold text-foreground text-xl">Product</h4>
               <div className="space-y-3 text-lg text-muted-foreground">
-                <div className="hover:text-primary transition-colors duration-300 cursor-pointer">Features</div>
-                <div className="hover:text-primary transition-colors duration-300 cursor-pointer">Pricing</div>
-                <div className="hover:text-primary transition-colors duration-300 cursor-pointer">API</div>
-                <div className="hover:text-primary transition-colors duration-300 cursor-pointer">Documentation</div>
+                <div className="hover:text-primary transition-colors duration-300 cursor-pointer">
+                  Features
+                </div>
+                <div className="hover:text-primary transition-colors duration-300 cursor-pointer">
+                  Pricing
+                </div>
+                <div className="hover:text-primary transition-colors duration-300 cursor-pointer">
+                  API
+                </div>
+                <div className="hover:text-primary transition-colors duration-300 cursor-pointer">
+                  Documentation
+                </div>
               </div>
             </div>
 
             <div className="space-y-6">
               <h4 className="font-semibold text-foreground text-xl">Company</h4>
               <div className="space-y-3 text-lg text-muted-foreground">
-                <div className="hover:text-primary transition-colors duration-300 cursor-pointer">About</div>
-                <div className="hover:text-primary transition-colors duration-300 cursor-pointer">Blog</div>
-                <div className="hover:text-primary transition-colors duration-300 cursor-pointer">Careers</div>
-                <div className="hover:text-primary transition-colors duration-300 cursor-pointer">Contact</div>
+                <div className="hover:text-primary transition-colors duration-300 cursor-pointer">
+                  About
+                </div>
+                <div className="hover:text-primary transition-colors duration-300 cursor-pointer">
+                  Blog
+                </div>
+                <div className="hover:text-primary transition-colors duration-300 cursor-pointer">
+                  Careers
+                </div>
+                <div className="hover:text-primary transition-colors duration-300 cursor-pointer">
+                  Contact
+                </div>
               </div>
             </div>
 
             <div className="space-y-6">
               <h4 className="font-semibold text-foreground text-xl">Support</h4>
               <div className="space-y-3 text-lg text-muted-foreground">
-                <div className="hover:text-primary transition-colors duration-300 cursor-pointer">Help Center</div>
-                <div className="hover:text-primary transition-colors duration-300 cursor-pointer">Privacy Policy</div>
-                <div className="hover:text-primary transition-colors duration-300 cursor-pointer">Terms of Service</div>
-                <div className="hover:text-primary transition-colors duration-300 cursor-pointer">Status</div>
+                <div className="hover:text-primary transition-colors duration-300 cursor-pointer">
+                  Help Center
+                </div>
+                <div className="hover:text-primary transition-colors duration-300 cursor-pointer">
+                  Privacy Policy
+                </div>
+                <div className="hover:text-primary transition-colors duration-300 cursor-pointer">
+                  Terms of Service
+                </div>
+                <div className="hover:text-primary transition-colors duration-300 cursor-pointer">
+                  Status
+                </div>
               </div>
             </div>
           </div>
-          
+
           <div className="border-t pt-12 text-center text-lg text-muted-foreground">
-            <p>&copy; 2024 Privacy Guard. All rights reserved. Protecting your digital privacy.</p>
+            <p>
+              &copy; 2024 Privacy Guard. All rights reserved. Protecting your
+              digital privacy.
+            </p>
           </div>
         </div>
       </footer>

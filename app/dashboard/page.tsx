@@ -92,8 +92,6 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-background">
-
-
       <div className="container mx-auto px-4 py-8">
         {/* Welcome Section */}
         <div className="mb-8">
@@ -180,9 +178,7 @@ export default function DashboardPage() {
           onValueChange={setActiveTab}
           className="space-y-6"
         >
-          <TabsList className="grid w-full grid-cols-4">
-
-          </TabsList>
+          <TabsList className="grid w-full grid-cols-4"></TabsList>
 
           <TabsContent value="overview" className="space-y-6">
             {/* Recent Activity */}
@@ -310,8 +306,6 @@ export default function DashboardPage() {
               </Card>
             </div>
           </TabsContent>
-
-
         </Tabs>
       </div>
     </div>

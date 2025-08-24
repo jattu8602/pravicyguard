@@ -22,12 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '@/components/ui/tabs'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import {
   User,
   Shield,
@@ -43,37 +38,48 @@ import {
   Monitor,
   Database,
   Zap,
+  Info,
 } from 'lucide-react'
 import Link from 'next/link'
+import { useToast } from '@/lib/toast-context'
 
 // Register ScrollTrigger plugin
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
 }
 
+interface DummyUser {
+  username?: string
+  email: string
+  password: string
+  loginTime?: string
+  registrationTime?: string
+}
+
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState('account')
+  const [dummyUser, setDummyUser] = useState<DummyUser | null>(null)
   const [settings, setSettings] = useState({
     // Account settings
     email: 'user@example.com',
     name: 'John Doe',
     timezone: 'UTC-5',
     language: 'en',
-    
+
     // Privacy settings
     dataCollection: true,
     analytics: false,
     thirdPartySharing: false,
     locationTracking: false,
     cookieConsent: true,
-    
+
     // Notification settings
     emailNotifications: true,
     pushNotifications: true,
     securityAlerts: true,
     weeklyReports: false,
     marketingEmails: false,
-    
+
     // Security settings
     twoFactorAuth: true,
     sessionTimeout: '30',
@@ -82,71 +88,93 @@ export default function SettingsPage() {
     suspiciousActivityAlerts: true,
   })
 
+  const { showSuccess, showInfo } = useToast()
+
   // Refs for GSAP animations
   const headerRef = useRef<HTMLDivElement>(null)
   const tabsRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    // Load dummy user data from localStorage
+    const storedUser = localStorage.getItem('dummyUser')
+    if (storedUser) {
+      const userData = JSON.parse(storedUser)
+      setDummyUser(userData)
+
+      // Update settings with user data
+      setSettings((prev) => ({
+        ...prev,
+        email: userData.email,
+        name: userData.username || 'User',
+      }))
+
+      showInfo(`Logged in as ${userData.email}`)
+    }
+
     // Header animation
-    gsap.fromTo(headerRef.current,
+    gsap.fromTo(
+      headerRef.current,
       { opacity: 0, y: -20 },
-      { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
+      { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }
     )
 
     // Tabs animation
     if (tabsRef.current) {
-      gsap.fromTo(tabsRef.current,
+      gsap.fromTo(
+        tabsRef.current,
         { opacity: 0, y: 20 },
-        { 
-          opacity: 1, 
-          y: 0, 
+        {
+          opacity: 1,
+          y: 0,
           duration: 0.5,
-          ease: "power2.out",
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: tabsRef.current,
-            start: "top 85%",
-            toggleActions: "play none none none"
-          }
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
         }
       )
     }
 
     // Content animation
     if (contentRef.current) {
-      gsap.fromTo(contentRef.current.children,
+      gsap.fromTo(
+        contentRef.current.children,
         { opacity: 0, y: 30 },
-        { 
-          opacity: 1, 
+        {
+          opacity: 1,
           y: 0,
           duration: 0.5,
           stagger: 0.1,
-          ease: "power2.out",
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: contentRef.current,
-            start: "top 80%",
-            toggleActions: "play none none none"
-          }
+            start: 'top 80%',
+            toggleActions: 'play none none none',
+          },
         }
       )
     }
 
     // Cleanup function
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
     }
-  }, [])
+  }, [showInfo])
 
   const handleSettingChange = (key: string, value: string | boolean) => {
-    setSettings(prev => ({
+    setSettings((prev) => ({
       ...prev,
-      [key]: value
+      [key]: value,
     }))
   }
 
   const handleSave = () => {
     // Simulate saving settings
     console.log('Saving settings:', settings)
+    showSuccess('Settings saved successfully!')
     // Here you would typically make an API call to save the settings
   }
 
@@ -155,7 +183,10 @@ export default function SettingsPage() {
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Header */}
         <div className="mb-8" ref={headerRef}>
-          <Link href="/dashboard" className="inline-flex items-center text-muted-foreground hover:text-foreground transition-colors duration-200 mb-4 text-lg">
+          <Link
+            href="/dashboard"
+            className="inline-flex items-center text-muted-foreground hover:text-foreground transition-colors duration-200 mb-4 text-lg"
+          >
             <ArrowLeft className="h-5 w-5 mr-3" />
             Back to Dashboard
           </Link>
@@ -173,7 +204,10 @@ export default function SettingsPage() {
                 <Download className="h-4 w-4 mr-2" />
                 Export Settings
               </Button>
-              <Button onClick={handleSave} className="bg-gradient-to-r from-primary to-primary/80">
+              <Button
+                onClick={handleSave}
+                className="bg-gradient-to-r from-primary to-primary/80"
+              >
                 <Save className="h-4 w-4 mr-2" />
                 Save Changes
               </Button>
@@ -183,21 +217,37 @@ export default function SettingsPage() {
 
         {/* Settings Tabs */}
         <div ref={tabsRef}>
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+          <Tabs
+            value={activeTab}
+            onValueChange={setActiveTab}
+            className="space-y-6"
+          >
             <TabsList className="grid w-full grid-cols-4 bg-card/50 backdrop-blur-sm">
-              <TabsTrigger value="account" className="flex items-center space-x-2">
+              <TabsTrigger
+                value="account"
+                className="flex items-center space-x-2"
+              >
                 <User className="h-4 w-4" />
                 <span>Account</span>
               </TabsTrigger>
-              <TabsTrigger value="privacy" className="flex items-center space-x-2">
+              <TabsTrigger
+                value="privacy"
+                className="flex items-center space-x-2"
+              >
                 <Eye className="h-4 w-4" />
                 <span>Privacy</span>
               </TabsTrigger>
-              <TabsTrigger value="notifications" className="flex items-center space-x-2">
+              <TabsTrigger
+                value="notifications"
+                className="flex items-center space-x-2"
+              >
                 <Bell className="h-4 w-4" />
                 <span>Notifications</span>
               </TabsTrigger>
-              <TabsTrigger value="security" className="flex items-center space-x-2">
+              <TabsTrigger
+                value="security"
+                className="flex items-center space-x-2"
+              >
                 <Shield className="h-4 w-4" />
                 <span>Security</span>
               </TabsTrigger>
@@ -206,6 +256,88 @@ export default function SettingsPage() {
             <div ref={contentRef}>
               {/* Account Settings */}
               <TabsContent value="account" className="space-y-6">
+                {/* Dummy User Credentials */}
+                {dummyUser && (
+                  <Card className="border-0 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950/20 dark:to-blue-900/20">
+                    <CardHeader>
+                      <CardTitle className="flex items-center space-x-2 text-blue-700 dark:text-blue-300">
+                        <Info className="h-5 w-5" />
+                        <span>Your Login Credentials</span>
+                      </CardTitle>
+                      <CardDescription className="text-blue-600 dark:text-blue-400">
+                        These are the credentials you used to log in
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label className="text-blue-700 dark:text-blue-300">
+                            Username
+                          </Label>
+                          <Input
+                            value={dummyUser.username || 'Not provided'}
+                            readOnly
+                            className="bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="text-blue-700 dark:text-blue-300">
+                            Email
+                          </Label>
+                          <Input
+                            value={dummyUser.email}
+                            readOnly
+                            className="bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800"
+                          />
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-blue-700 dark:text-blue-300">
+                          Password
+                        </Label>
+                        <Input
+                          value={dummyUser.password}
+                          type="password"
+                          readOnly
+                          className="bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800"
+                        />
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label className="text-blue-700 dark:text-blue-300">
+                            Login Time
+                          </Label>
+                          <Input
+                            value={
+                              dummyUser.loginTime
+                                ? new Date(dummyUser.loginTime).toLocaleString()
+                                : 'N/A'
+                            }
+                            readOnly
+                            className="bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="text-blue-700 dark:text-blue-300">
+                            Registration Time
+                          </Label>
+                          <Input
+                            value={
+                              dummyUser.registrationTime
+                                ? new Date(
+                                    dummyUser.registrationTime
+                                  ).toLocaleString()
+                                : 'N/A'
+                            }
+                            readOnly
+                            className="bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800"
+                          />
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+
                 <Card className="border-0 bg-gradient-to-br from-card to-card/80 backdrop-blur-sm">
                   <CardHeader>
                     <CardTitle className="flex items-center space-x-2">
@@ -223,7 +355,9 @@ export default function SettingsPage() {
                         <Input
                           id="name"
                           value={settings.name}
-                          onChange={(e) => handleSettingChange('name', e.target.value)}
+                          onChange={(e) =>
+                            handleSettingChange('name', e.target.value)
+                          }
                           placeholder="Enter your full name"
                         />
                       </div>
@@ -233,7 +367,9 @@ export default function SettingsPage() {
                           id="email"
                           type="email"
                           value={settings.email}
-                          onChange={(e) => handleSettingChange('email', e.target.value)}
+                          onChange={(e) =>
+                            handleSettingChange('email', e.target.value)
+                          }
                           placeholder="Enter your email"
                         />
                       </div>
@@ -241,22 +377,40 @@ export default function SettingsPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-2">
                         <Label htmlFor="timezone">Timezone</Label>
-                        <Select value={settings.timezone} onValueChange={(value) => handleSettingChange('timezone', value)}>
+                        <Select
+                          value={settings.timezone}
+                          onValueChange={(value) =>
+                            handleSettingChange('timezone', value)
+                          }
+                        >
                           <SelectTrigger>
                             <SelectValue placeholder="Select timezone" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="UTC-8">Pacific Time (UTC-8)</SelectItem>
-                            <SelectItem value="UTC-5">Eastern Time (UTC-5)</SelectItem>
+                            <SelectItem value="UTC-8">
+                              Pacific Time (UTC-8)
+                            </SelectItem>
+                            <SelectItem value="UTC-5">
+                              Eastern Time (UTC-5)
+                            </SelectItem>
                             <SelectItem value="UTC+0">UTC</SelectItem>
-                            <SelectItem value="UTC+1">Central European Time (UTC+1)</SelectItem>
-                            <SelectItem value="UTC+5:30">India Standard Time (UTC+5:30)</SelectItem>
+                            <SelectItem value="UTC+1">
+                              Central European Time (UTC+1)
+                            </SelectItem>
+                            <SelectItem value="UTC+5:30">
+                              India Standard Time (UTC+5:30)
+                            </SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="language">Language</Label>
-                        <Select value={settings.language} onValueChange={(value) => handleSettingChange('language', value)}>
+                        <Select
+                          value={settings.language}
+                          onValueChange={(value) =>
+                            handleSettingChange('language', value)
+                          }
+                        >
                           <SelectTrigger>
                             <SelectValue placeholder="Select language" />
                           </SelectTrigger>
@@ -287,7 +441,9 @@ export default function SettingsPage() {
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="font-medium">Export My Data</p>
-                        <p className="text-sm text-muted-foreground">Download all your data in JSON format</p>
+                        <p className="text-sm text-muted-foreground">
+                          Download all your data in JSON format
+                        </p>
                       </div>
                       <Button variant="outline" className="bg-transparent">
                         <Download className="h-4 w-4 mr-2" />
@@ -297,9 +453,14 @@ export default function SettingsPage() {
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="font-medium">Delete Account</p>
-                        <p className="text-sm text-muted-foreground">Permanently delete your account and all data</p>
+                        <p className="text-sm text-muted-foreground">
+                          Permanently delete your account and all data
+                        </p>
                       </div>
-                      <Button variant="destructive" className="bg-transparent border-destructive text-destructive hover:bg-destructive hover:text-destructive-foreground">
+                      <Button
+                        variant="destructive"
+                        className="bg-transparent border-destructive text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                      >
                         <Trash2 className="h-4 w-4 mr-2" />
                         Delete
                       </Button>
@@ -325,51 +486,73 @@ export default function SettingsPage() {
                       <div className="flex items-center justify-between">
                         <div className="space-y-1">
                           <p className="font-medium">Data Collection</p>
-                          <p className="text-sm text-muted-foreground">Allow Privacy Guard to collect usage data for improvements</p>
+                          <p className="text-sm text-muted-foreground">
+                            Allow Privacy Guard to collect usage data for
+                            improvements
+                          </p>
                         </div>
                         <Switch
                           checked={settings.dataCollection}
-                          onCheckedChange={(checked) => handleSettingChange('dataCollection', checked)}
+                          onCheckedChange={(checked) =>
+                            handleSettingChange('dataCollection', checked)
+                          }
                         />
                       </div>
                       <div className="flex items-center justify-between">
                         <div className="space-y-1">
                           <p className="font-medium">Analytics</p>
-                          <p className="text-sm text-muted-foreground">Share anonymous analytics to help improve the service</p>
+                          <p className="text-sm text-muted-foreground">
+                            Share anonymous analytics to help improve the
+                            service
+                          </p>
                         </div>
                         <Switch
                           checked={settings.analytics}
-                          onCheckedChange={(checked) => handleSettingChange('analytics', checked)}
+                          onCheckedChange={(checked) =>
+                            handleSettingChange('analytics', checked)
+                          }
                         />
                       </div>
                       <div className="flex items-center justify-between">
                         <div className="space-y-1">
                           <p className="font-medium">Third-party Sharing</p>
-                          <p className="text-sm text-muted-foreground">Allow sharing data with trusted third-party services</p>
+                          <p className="text-sm text-muted-foreground">
+                            Allow sharing data with trusted third-party services
+                          </p>
                         </div>
                         <Switch
                           checked={settings.thirdPartySharing}
-                          onCheckedChange={(checked) => handleSettingChange('thirdPartySharing', checked)}
+                          onCheckedChange={(checked) =>
+                            handleSettingChange('thirdPartySharing', checked)
+                          }
                         />
                       </div>
                       <div className="flex items-center justify-between">
                         <div className="space-y-1">
                           <p className="font-medium">Location Tracking</p>
-                          <p className="text-sm text-muted-foreground">Allow location-based privacy recommendations</p>
+                          <p className="text-sm text-muted-foreground">
+                            Allow location-based privacy recommendations
+                          </p>
                         </div>
                         <Switch
                           checked={settings.locationTracking}
-                          onCheckedChange={(checked) => handleSettingChange('locationTracking', checked)}
+                          onCheckedChange={(checked) =>
+                            handleSettingChange('locationTracking', checked)
+                          }
                         />
                       </div>
                       <div className="flex items-center justify-between">
                         <div className="space-y-1">
                           <p className="font-medium">Cookie Consent</p>
-                          <p className="text-sm text-muted-foreground">Automatically manage cookie consent on websites</p>
+                          <p className="text-sm text-muted-foreground">
+                            Automatically manage cookie consent on websites
+                          </p>
                         </div>
                         <Switch
                           checked={settings.cookieConsent}
-                          onCheckedChange={(checked) => handleSettingChange('cookieConsent', checked)}
+                          onCheckedChange={(checked) =>
+                            handleSettingChange('cookieConsent', checked)
+                          }
                         />
                       </div>
                     </div>
@@ -391,17 +574,23 @@ export default function SettingsPage() {
                       <div className="text-center p-4 border rounded-lg">
                         <Monitor className="h-8 w-8 mx-auto mb-2 text-primary" />
                         <p className="font-medium">Desktop</p>
-                        <Badge variant="outline" className="mt-2">Active</Badge>
+                        <Badge variant="outline" className="mt-2">
+                          Active
+                        </Badge>
                       </div>
                       <div className="text-center p-4 border rounded-lg">
                         <Smartphone className="h-8 w-8 mx-auto mb-2 text-accent" />
                         <p className="font-medium">Mobile</p>
-                        <Badge variant="outline" className="mt-2">Active</Badge>
+                        <Badge variant="outline" className="mt-2">
+                          Active
+                        </Badge>
                       </div>
                       <div className="text-center p-4 border rounded-lg">
                         <Zap className="h-8 w-8 mx-auto mb-2 text-chart-3" />
                         <p className="font-medium">Real-time</p>
-                        <Badge variant="outline" className="mt-2">Enabled</Badge>
+                        <Badge variant="outline" className="mt-2">
+                          Enabled
+                        </Badge>
                       </div>
                     </div>
                   </CardContent>
@@ -425,51 +614,71 @@ export default function SettingsPage() {
                       <div className="flex items-center justify-between">
                         <div className="space-y-1">
                           <p className="font-medium">Email Notifications</p>
-                          <p className="text-sm text-muted-foreground">Receive important updates via email</p>
+                          <p className="text-sm text-muted-foreground">
+                            Receive important updates via email
+                          </p>
                         </div>
                         <Switch
                           checked={settings.emailNotifications}
-                          onCheckedChange={(checked) => handleSettingChange('emailNotifications', checked)}
+                          onCheckedChange={(checked) =>
+                            handleSettingChange('emailNotifications', checked)
+                          }
                         />
                       </div>
                       <div className="flex items-center justify-between">
                         <div className="space-y-1">
                           <p className="font-medium">Push Notifications</p>
-                          <p className="text-sm text-muted-foreground">Get instant alerts on your device</p>
+                          <p className="text-sm text-muted-foreground">
+                            Get instant alerts on your device
+                          </p>
                         </div>
                         <Switch
                           checked={settings.pushNotifications}
-                          onCheckedChange={(checked) => handleSettingChange('pushNotifications', checked)}
+                          onCheckedChange={(checked) =>
+                            handleSettingChange('pushNotifications', checked)
+                          }
                         />
                       </div>
                       <div className="flex items-center justify-between">
                         <div className="space-y-1">
                           <p className="font-medium">Security Alerts</p>
-                          <p className="text-sm text-muted-foreground">Immediate notifications for security threats</p>
+                          <p className="text-sm text-muted-foreground">
+                            Immediate notifications for security threats
+                          </p>
                         </div>
                         <Switch
                           checked={settings.securityAlerts}
-                          onCheckedChange={(checked) => handleSettingChange('securityAlerts', checked)}
+                          onCheckedChange={(checked) =>
+                            handleSettingChange('securityAlerts', checked)
+                          }
                         />
                       </div>
                       <div className="flex items-center justify-between">
                         <div className="space-y-1">
                           <p className="font-medium">Weekly Reports</p>
-                          <p className="text-sm text-muted-foreground">Summary of your privacy protection activity</p>
+                          <p className="text-sm text-muted-foreground">
+                            Summary of your privacy protection activity
+                          </p>
                         </div>
                         <Switch
                           checked={settings.weeklyReports}
-                          onCheckedChange={(checked) => handleSettingChange('weeklyReports', checked)}
+                          onCheckedChange={(checked) =>
+                            handleSettingChange('weeklyReports', checked)
+                          }
                         />
                       </div>
                       <div className="flex items-center justify-between">
                         <div className="space-y-1">
                           <p className="font-medium">Marketing Emails</p>
-                          <p className="text-sm text-muted-foreground">Receive updates about new features and offers</p>
+                          <p className="text-sm text-muted-foreground">
+                            Receive updates about new features and offers
+                          </p>
                         </div>
                         <Switch
                           checked={settings.marketingEmails}
-                          onCheckedChange={(checked) => handleSettingChange('marketingEmails', checked)}
+                          onCheckedChange={(checked) =>
+                            handleSettingChange('marketingEmails', checked)
+                          }
                         />
                       </div>
                     </div>
@@ -493,17 +702,30 @@ export default function SettingsPage() {
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
                         <div className="space-y-1">
-                          <p className="font-medium">Two-Factor Authentication</p>
-                          <p className="text-sm text-muted-foreground">Add an extra layer of security to your account</p>
+                          <p className="font-medium">
+                            Two-Factor Authentication
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            Add an extra layer of security to your account
+                          </p>
                         </div>
                         <Switch
                           checked={settings.twoFactorAuth}
-                          onCheckedChange={(checked) => handleSettingChange('twoFactorAuth', checked)}
+                          onCheckedChange={(checked) =>
+                            handleSettingChange('twoFactorAuth', checked)
+                          }
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="sessionTimeout">Session Timeout (minutes)</Label>
-                        <Select value={settings.sessionTimeout} onValueChange={(value) => handleSettingChange('sessionTimeout', value)}>
+                        <Label htmlFor="sessionTimeout">
+                          Session Timeout (minutes)
+                        </Label>
+                        <Select
+                          value={settings.sessionTimeout}
+                          onValueChange={(value) =>
+                            handleSettingChange('sessionTimeout', value)
+                          }
+                        >
                           <SelectTrigger>
                             <SelectValue placeholder="Select timeout" />
                           </SelectTrigger>
@@ -516,8 +738,15 @@ export default function SettingsPage() {
                         </Select>
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="passwordExpiry">Password Expiry (days)</Label>
-                        <Select value={settings.passwordExpiry} onValueChange={(value) => handleSettingChange('passwordExpiry', value)}>
+                        <Label htmlFor="passwordExpiry">
+                          Password Expiry (days)
+                        </Label>
+                        <Select
+                          value={settings.passwordExpiry}
+                          onValueChange={(value) =>
+                            handleSettingChange('passwordExpiry', value)
+                          }
+                        >
                           <SelectTrigger>
                             <SelectValue placeholder="Select expiry" />
                           </SelectTrigger>
@@ -532,21 +761,34 @@ export default function SettingsPage() {
                       <div className="flex items-center justify-between">
                         <div className="space-y-1">
                           <p className="font-medium">Login Notifications</p>
-                          <p className="text-sm text-muted-foreground">Get notified when someone logs into your account</p>
+                          <p className="text-sm text-muted-foreground">
+                            Get notified when someone logs into your account
+                          </p>
                         </div>
                         <Switch
                           checked={settings.loginNotifications}
-                          onCheckedChange={(checked) => handleSettingChange('loginNotifications', checked)}
+                          onCheckedChange={(checked) =>
+                            handleSettingChange('loginNotifications', checked)
+                          }
                         />
                       </div>
                       <div className="flex items-center justify-between">
                         <div className="space-y-1">
-                          <p className="font-medium">Suspicious Activity Alerts</p>
-                          <p className="text-sm text-muted-foreground">Alert for unusual account activity</p>
+                          <p className="font-medium">
+                            Suspicious Activity Alerts
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            Alert for unusual account activity
+                          </p>
                         </div>
                         <Switch
                           checked={settings.suspiciousActivityAlerts}
-                          onCheckedChange={(checked) => handleSettingChange('suspiciousActivityAlerts', checked)}
+                          onCheckedChange={(checked) =>
+                            handleSettingChange(
+                              'suspiciousActivityAlerts',
+                              checked
+                            )
+                          }
                         />
                       </div>
                     </div>
@@ -569,12 +811,20 @@ export default function SettingsPage() {
                         <Monitor className="h-5 w-5 text-primary" />
                         <div>
                           <p className="font-medium">MacBook Pro</p>
-                          <p className="text-sm text-muted-foreground">Chrome • San Francisco, CA</p>
+                          <p className="text-sm text-muted-foreground">
+                            Chrome • San Francisco, CA
+                          </p>
                         </div>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <Badge variant="outline" className="text-chart-3">Current</Badge>
-                        <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive">
+                        <Badge variant="outline" className="text-chart-3">
+                          Current
+                        </Badge>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="text-destructive hover:text-destructive"
+                        >
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>
@@ -584,12 +834,18 @@ export default function SettingsPage() {
                         <Smartphone className="h-5 w-5 text-accent" />
                         <div>
                           <p className="font-medium">iPhone 14</p>
-                          <p className="text-sm text-muted-foreground">Safari • San Francisco, CA</p>
+                          <p className="text-sm text-muted-foreground">
+                            Safari • San Francisco, CA
+                          </p>
                         </div>
                       </div>
                       <div className="flex items-center space-x-2">
                         <Badge variant="outline">Active</Badge>
-                        <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="text-destructive hover:text-destructive"
+                        >
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>
