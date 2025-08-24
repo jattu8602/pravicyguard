@@ -31,6 +31,10 @@ import {
   XCircle,
   AlertCircle,
   ExternalLink,
+  ArrowLeft,
+  Calendar,
+  TrendingUp,
+  AlertTriangle,
 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -40,79 +44,52 @@ const monitoringLogs = [
     id: 1,
     timestamp: '2024-01-15T10:30:00Z',
     website: 'social-media-site.com',
-    url: 'https://social-media-site.com/chat',
     riskLevel: 'high',
-    category: 'data_collection',
     threat: 'Personal Information Request',
     description: 'AI chatbot requested phone number and email address',
-    dataRequested: ['phone', 'email'],
     action: 'blocked',
-    userAgent: 'Chrome Extension',
-    ipAddress: '192.168.1.100',
   },
   {
     id: 2,
     timestamp: '2024-01-15T10:25:00Z',
     website: 'shopping-platform.com',
-    url: 'https://shopping-platform.com/checkout',
     riskLevel: 'medium',
-    category: 'tracking',
     threat: 'Third-party Tracking',
     description: 'Multiple tracking cookies detected from advertising networks',
-    dataRequested: ['browsing_history', 'location'],
     action: 'monitored',
-    userAgent: 'Chrome Extension',
-    ipAddress: '192.168.1.100',
   },
   {
     id: 3,
     timestamp: '2024-01-15T10:20:00Z',
     website: 'news-website.com',
-    url: 'https://news-website.com/article/123',
     riskLevel: 'low',
-    category: 'analytics',
     threat: 'Standard Analytics',
     description: 'Google Analytics tracking detected',
-    dataRequested: ['page_views'],
     action: 'allowed',
-    userAgent: 'Chrome Extension',
-    ipAddress: '192.168.1.100',
   },
   {
     id: 4,
     timestamp: '2024-01-15T10:15:00Z',
     website: 'banking-site.com',
-    url: 'https://banking-site.com/login',
     riskLevel: 'high',
-    category: 'suspicious',
     threat: 'Suspicious Data Collection',
     description: 'Unusual form fields detected requesting SSN',
-    dataRequested: ['ssn', 'bank_account'],
     action: 'blocked',
-    userAgent: 'Chrome Extension',
-    ipAddress: '192.168.1.100',
   },
   {
     id: 5,
     timestamp: '2024-01-15T10:10:00Z',
     website: 'weather-app.com',
-    url: 'https://weather-app.com/forecast',
     riskLevel: 'medium',
-    category: 'location',
     threat: 'Location Tracking',
     description: 'Precise location access requested',
-    dataRequested: ['precise_location'],
     action: 'monitored',
-    userAgent: 'Chrome Extension',
-    ipAddress: '192.168.1.100',
   },
 ]
 
 export default function MonitoringLogsPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [riskFilter, setRiskFilter] = useState('all')
-  const [categoryFilter, setCategoryFilter] = useState('all')
-  // const [activeTab, setActiveTab] = useState('all')
 
   const getRiskColor = (risk: string) => {
     switch (risk) {
@@ -154,7 +131,12 @@ export default function MonitoringLogsPage() {
   }
 
   const formatTimestamp = (timestamp: string) => {
-    return new Date(timestamp).toLocaleString()
+    return new Date(timestamp).toLocaleString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    })
   }
 
   const filteredLogs = monitoringLogs.filter((log) => {
@@ -162,47 +144,101 @@ export default function MonitoringLogsPage() {
       log.website.toLowerCase().includes(searchTerm.toLowerCase()) ||
       log.description.toLowerCase().includes(searchTerm.toLowerCase())
     const matchesRisk = riskFilter === 'all' || log.riskLevel === riskFilter
-    const matchesCategory =
-      categoryFilter === 'all' || log.category === categoryFilter
-    return matchesSearch && matchesRisk && matchesCategory
+    return matchesSearch && matchesRisk
   })
 
   return (
-    <div className="min-h-screen bg-background">
-    
-      <div className="container mx-auto px-4 py-8">
-        {/* Page Header */}
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+      <div className="container mx-auto px-4 py-8 max-w-6xl">
+        {/* Navigation Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">
-            Monitoring Logs
-          </h1>
-          <p className="text-muted-foreground">
-            Detailed logs of all website privacy monitoring activities
-          </p>
+          <Link href="/dashboard" className="inline-flex items-center text-muted-foreground hover:text-foreground transition-colors duration-200 mb-4">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Dashboard
+          </Link>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-foreground mb-2">
+                Activity Logs
+              </h1>
+              <p className="text-muted-foreground">
+                Monitor your privacy protection activities
+              </p>
+            </div>
+            <div className="flex items-center space-x-3">
+              <Button variant="outline" size="sm" className="bg-transparent">
+                <RefreshCw className="h-4 w-4 mr-2" />
+                Refresh
+              </Button>
+              <Button variant="outline" size="sm" className="bg-transparent">
+                <Download className="h-4 w-4 mr-2" />
+                Export
+              </Button>
+            </div>
+          </div>
         </div>
 
-        {/* Filters and Search */}
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2">
-              <Filter className="h-5 w-5" />
-              <span>Filters & Search</span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="relative">
+        {/* Quick Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <Card className="border-0 bg-gradient-to-br from-card to-card/80 backdrop-blur-sm">
+            <CardContent className="pt-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">Today's Activity</p>
+                  <p className="text-2xl font-bold text-foreground">247</p>
+                </div>
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+                  <TrendingUp className="h-6 w-6 text-primary" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-0 bg-gradient-to-br from-card to-card/80 backdrop-blur-sm">
+            <CardContent className="pt-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">Threats Blocked</p>
+                  <p className="text-2xl font-bold text-destructive">12</p>
+                </div>
+                <div className="w-12 h-12 bg-destructive/10 rounded-xl flex items-center justify-center">
+                  <AlertTriangle className="h-6 w-6 text-destructive" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-0 bg-gradient-to-br from-card to-card/80 backdrop-blur-sm">
+            <CardContent className="pt-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">Protection Rate</p>
+                  <p className="text-2xl font-bold text-chart-3">98%</p>
+                </div>
+                <div className="w-12 h-12 bg-chart-3/10 rounded-xl flex items-center justify-center">
+                  <Shield className="h-6 w-6 text-chart-3" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Search and Filters */}
+        <Card className="mb-8 border-0 bg-gradient-to-br from-card to-card/80 backdrop-blur-sm">
+          <CardContent className="pt-6">
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   placeholder="Search websites or threats..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 bg-transparent border-2 focus:border-primary/50"
                 />
               </div>
               <Select value={riskFilter} onValueChange={setRiskFilter}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Risk Level" />
+                <SelectTrigger className="w-full sm:w-48 bg-transparent border-2">
+                  <SelectValue placeholder="Filter by risk" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Risk Levels</SelectItem>
@@ -211,191 +247,99 @@ export default function MonitoringLogsPage() {
                   <SelectItem value="low">Low Risk</SelectItem>
                 </SelectContent>
               </Select>
-              <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Category" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Categories</SelectItem>
-                  <SelectItem value="data_collection">
-                    Data Collection
-                  </SelectItem>
-                  <SelectItem value="tracking">Tracking</SelectItem>
-                  <SelectItem value="analytics">Analytics</SelectItem>
-                  <SelectItem value="suspicious">Suspicious</SelectItem>
-                  <SelectItem value="location">Location</SelectItem>
-                </SelectContent>
-              </Select>
-              <div className="flex space-x-2">
-                <Button variant="outline" size="sm" className="bg-transparent">
-                  <RefreshCw className="h-4 w-4 mr-2" />
-                  Refresh
-                </Button>
-                <Button variant="outline" size="sm" className="bg-transparent">
-                  <Download className="h-4 w-4 mr-2" />
-                  Export
-                </Button>
-              </div>
             </div>
           </CardContent>
         </Card>
 
-        {/* Monitoring Logs */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <Eye className="h-5 w-5" />
-                <span>Activity Logs</span>
-                <Badge variant="outline">{filteredLogs.length} entries</Badge>
-              </div>
-            </CardTitle>
-            <CardDescription>
-              Real-time monitoring of website privacy activities
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {filteredLogs.map((log) => (
-                <div
-                  key={log.id}
-                  className="border rounded-lg p-4 hover:bg-muted/30 transition-colors"
-                >
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex items-center space-x-3">
-                      <div
-                        className={`w-3 h-3 rounded-full ${getRiskColor(
-                          log.riskLevel
-                        )} bg-current`}
-                      />
-                      <div>
-                        <div className="flex items-center space-x-2">
-                          <Globe className="h-4 w-4 text-muted-foreground" />
-                          <span className="font-medium text-foreground">
-                            {log.website}
-                          </span>
-                          <ExternalLink className="h-3 w-3 text-muted-foreground" />
-                        </div>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          {log.url}
-                        </p>
+        {/* Logs List */}
+        <div className="space-y-4">
+          {filteredLogs.map((log) => (
+            <Card 
+              key={log.id} 
+              className="border-0 bg-gradient-to-br from-card to-card/80 backdrop-blur-sm animate-scale-in"
+              style={{ animationDelay: `${log.id * 0.1}s` }}
+            >
+              <CardContent className="pt-6">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-start space-x-4">
+                    <div className={`w-3 h-3 rounded-full mt-2 ${getRiskColor(log.riskLevel)} bg-current`} />
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-3 mb-2">
+                        <Globe className="h-5 w-5 text-primary" />
+                        <h3 className="font-semibold text-foreground text-lg">
+                          {log.website}
+                        </h3>
+                        <Badge variant={getRiskBadgeVariant(log.riskLevel)} className="text-xs">
+                          {log.riskLevel}
+                        </Badge>
                       </div>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Badge variant={getRiskBadgeVariant(log.riskLevel)}>
-                        {log.riskLevel}
-                      </Badge>
-                      {getActionIcon(log.action)}
-                    </div>
-                  </div>
-
-                  <div className="grid md:grid-cols-2 gap-4 mb-3">
-                    <div>
                       <h4 className="font-medium text-foreground mb-1">
                         {log.threat}
                       </h4>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-muted-foreground text-sm leading-relaxed">
                         {log.description}
                       </p>
                     </div>
-                    <div>
-                      <h4 className="font-medium text-foreground mb-1">
-                        Data Requested
-                      </h4>
-                      <div className="flex flex-wrap gap-1">
-                        {log.dataRequested.map((data, index) => (
-                          <Badge
-                            key={index}
-                            variant="outline"
-                            className="text-xs"
-                          >
-                            {data.replace('_', ' ')}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
                   </div>
-
-                  <div className="flex items-center justify-between text-xs text-muted-foreground border-t pt-3">
-                    <div className="flex items-center space-x-4">
-                      <div className="flex items-center space-x-1">
-                        <Clock className="h-3 w-3" />
-                        <span>{formatTimestamp(log.timestamp)}</span>
-                      </div>
-                      <span>Category: {log.category.replace('_', ' ')}</span>
-                      <span>Action: {log.action}</span>
-                    </div>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-auto p-1 text-xs"
-                    >
-                      View Details
-                    </Button>
+                  <div className="flex items-center space-x-3">
+                    {getActionIcon(log.action)}
+                    <span className="text-sm text-muted-foreground capitalize">
+                      {log.action}
+                    </span>
                   </div>
                 </div>
-              ))}
-            </div>
-
-            {filteredLogs.length === 0 && (
-              <div className="text-center py-8">
-                <Eye className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <p className="text-muted-foreground">
-                  No monitoring logs found
-                </p>
-                <p className="text-sm text-muted-foreground mt-2">
-                  Try adjusting your filters or visit some websites to generate
-                  logs
-                </p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Summary Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium">
-                Today&apos;s Activity
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-foreground">247</div>
-              <p className="text-xs text-muted-foreground">
-                Websites monitored
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium">
-                Threats Detected
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-destructive">12</div>
-              <p className="text-xs text-muted-foreground">
-                High-risk activities blocked
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium">
-                Data Protected
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-chart-3">98%</div>
-              <p className="text-xs text-muted-foreground">
-                Privacy protection rate
-              </p>
-            </CardContent>
-          </Card>
+                
+                <div className="flex items-center justify-between pt-4 border-t border-border/50">
+                  <div className="flex items-center space-x-1 text-sm text-muted-foreground">
+                    <Calendar className="h-4 w-4" />
+                    <span>{formatTimestamp(log.timestamp)}</span>
+                  </div>
+                  <Button variant="ghost" size="sm" className="text-primary hover:text-primary/80 hover:bg-primary/10">
+                    View Details
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
+
+        {/* Empty State */}
+        {filteredLogs.length === 0 && (
+          <Card className="border-0 bg-gradient-to-br from-card to-card/80 backdrop-blur-sm">
+            <CardContent className="pt-12 pb-12">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-muted/50 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Eye className="h-8 w-8 text-muted-foreground" />
+                </div>
+                <h3 className="text-lg font-semibold text-foreground mb-2">
+                  No logs found
+                </h3>
+                <p className="text-muted-foreground mb-4">
+                  Try adjusting your search or filters
+                </p>
+                <Button 
+                  variant="outline" 
+                  onClick={() => {
+                    setSearchTerm('')
+                    setRiskFilter('all')
+                  }}
+                  className="bg-transparent"
+                >
+                  Clear Filters
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Load More */}
+        {filteredLogs.length > 0 && (
+          <div className="text-center mt-8">
+            <Button variant="outline" className="bg-transparent">
+              Load More Logs
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   )
