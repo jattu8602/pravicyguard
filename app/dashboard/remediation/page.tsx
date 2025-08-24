@@ -20,7 +20,6 @@ import {
 import { Checkbox } from '@/components/ui/checkbox'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import {
-  Shield,
   AlertTriangle,
   Chrome,
   FileBox as Firefox,

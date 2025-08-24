@@ -29,22 +29,16 @@ import {
   TabsTrigger,
 } from '@/components/ui/tabs'
 import {
-  Settings,
   User,
   Shield,
   Bell,
   Eye,
-  Lock,
   Key,
   Globe,
   Download,
-  Upload,
   Save,
   ArrowLeft,
   Trash2,
-  AlertTriangle,
-  CheckCircle,
-  Clock,
   Smartphone,
   Monitor,
   Database,
@@ -143,7 +137,7 @@ export default function SettingsPage() {
     }
   }, [])
 
-  const handleSettingChange = (key: string, value: any) => {
+  const handleSettingChange = (key: string, value: string | boolean) => {
     setSettings(prev => ({
       ...prev,
       [key]: value

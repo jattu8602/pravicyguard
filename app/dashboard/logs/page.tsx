@@ -4,9 +4,6 @@ import { useState } from 'react'
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
 } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -22,15 +19,12 @@ import {
   Shield,
   Eye,
   Search,
-  Filter,
   Download,
   RefreshCw,
   Globe,
-  Clock,
   CheckCircle,
   XCircle,
   AlertCircle,
-  ExternalLink,
   ArrowLeft,
   Calendar,
   TrendingUp,
@@ -184,7 +178,7 @@ export default function MonitoringLogsPage() {
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Today's Activity</p>
+                  <p className="text-sm font-medium text-muted-foreground">Today&apos;s Activity</p>
                   <p className="text-2xl font-bold text-foreground">247</p>
                 </div>
                 <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">

@@ -14,11 +14,9 @@ import {
 import {
   Shield,
   Eye,
-  AlertTriangle,
   TrendingUp,
   Chrome,
   Globe,
-  CheckCircle,
   Users,
   Zap,
   Lock,
@@ -29,7 +27,6 @@ import {
   Download,
   Smartphone,
   Monitor,
-  Database,
   Cpu,
   Fingerprint,
 } from 'lucide-react'
@@ -448,7 +445,7 @@ export default function HomePage() {
                   ))}
                 </div>
                 <p className="text-muted-foreground mb-4 italic text-sm leading-relaxed">
-                  "Privacy Guard has completely transformed how I browse the web. The real-time alerts and remediation guides are incredibly helpful."
+                  &ldquo;Privacy Guard has completely transformed how I browse the web. The real-time alerts and remediation guides are incredibly helpful.&rdquo;
                 </p>
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
@@ -470,7 +467,7 @@ export default function HomePage() {
                   ))}
                 </div>
                 <p className="text-muted-foreground mb-4 italic text-sm leading-relaxed">
-                  "The AI detection is incredibly accurate. It caught several data collection attempts I never would have noticed."
+                  &ldquo;The AI detection is incredibly accurate. It caught several data collection attempts I never would have noticed.&rdquo;
                 </p>
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-accent/10 rounded-full flex items-center justify-center">
@@ -492,7 +489,7 @@ export default function HomePage() {
                   ))}
                 </div>
                 <p className="text-muted-foreground mb-4 italic text-sm leading-relaxed">
-                  "As someone who works with sensitive data, Privacy Guard gives me peace of mind. The browser extension is seamless."
+                  &ldquo;As someone who works with sensitive data, Privacy Guard gives me peace of mind. The browser extension is seamless.&rdquo;
                 </p>
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-chart-3/10 rounded-full flex items-center justify-center">
