@@ -1,103 +1,180 @@
-import Image from "next/image";
+import { Button } from '@/components/ui/button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import {
+  Shield,
+  Eye,
+  AlertTriangle,
+  TrendingUp,
+  Chrome,
+  Globe,
+} from 'lucide-react'
+import Link from 'next/link'
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <Shield className="h-6 w-6 text-primary" />
+            <span className="text-xl font-bold text-foreground">
+              Privacy Guard
+            </span>
+          </div>
+          <div className="flex items-center space-x-4">
+            <Link href="/login">
+              <Button variant="ghost">Sign In</Button>
+            </Link>
+            <Link href="/register">
+              <Button>Get Started</Button>
+            </Link>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      </header>
+
+      {/* Hero Section */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto text-center space-y-8">
+          <div className="space-y-4">
+            <h1 className="text-4xl md:text-6xl font-bold text-foreground">
+              Protect Your Privacy
+              <span className="text-primary block">Across Every Website</span>
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Advanced AI-powered monitoring that detects privacy risks, harmful
+              data collection, and provides instant remediation guides for safer
+              browsing.
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/register">
+              <Button size="lg" className="w-full sm:w-auto">
+                Start Free Monitoring
+              </Button>
+            </Link>
+            <Link href="/demo">
+              <Button
+                variant="outline"
+                size="lg"
+                className="w-full sm:w-auto bg-transparent"
+              >
+                View Demo
+              </Button>
+            </Link>
+          </div>
+
+          <div className="flex items-center justify-center space-x-8 text-sm text-muted-foreground">
+            <div className="flex items-center space-x-2">
+              <Globe className="h-4 w-4" />
+              <span>Web Dashboard</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Chrome className="h-4 w-4" />
+              <span>Browser Extension</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Grid */}
+      <section className="py-16 px-4 bg-muted/30">
+        <div className="container mx-auto">
+          <div className="text-center space-y-4 mb-12">
+            <h2 className="text-3xl font-bold text-foreground">
+              Complete Privacy Protection
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Our dual-platform approach monitors every interaction and provides
+              real-time insights to keep your data safe.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Card>
+              <CardHeader>
+                <Eye className="h-8 w-8 text-primary mb-2" />
+                <CardTitle>Real-time Monitoring</CardTitle>
+                <CardDescription>
+                  Track every website interaction and data request in real-time
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  Our extension monitors all website activities, logging data
+                  collection attempts and suspicious behavior patterns.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <AlertTriangle className="h-8 w-8 text-accent mb-2" />
+                <CardTitle>AI Risk Detection</CardTitle>
+                <CardDescription>
+                  Advanced AI identifies privacy threats and harmful patterns
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  Machine learning algorithms analyze chatbot interactions and
+                  detect when websites attempt to collect sensitive personal
+                  information.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <TrendingUp className="h-8 w-8 text-chart-3 mb-2" />
+                <CardTitle>Instant Remediation</CardTitle>
+                <CardDescription>
+                  Step-by-step guides to protect yourself from detected threats
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  Get immediate guidance on clearing cookies, revoking
+                  permissions, and finding safer alternatives to risky websites.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto text-center space-y-8">
+          <div className="space-y-4">
+            <h2 className="text-3xl font-bold text-foreground">
+              Ready to Take Control of Your Privacy?
+            </h2>
+            <p className="text-muted-foreground max-w-xl mx-auto">
+              Join thousands of users who trust Privacy Guard to keep their data
+              safe across the web.
+            </p>
+          </div>
+
+          <Link href="/register">
+            <Button size="lg">Get Started Free</Button>
+          </Link>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t bg-muted/30 py-8 px-4">
+        <div className="container mx-auto text-center text-sm text-muted-foreground">
+          <p>&copy; 2024 Privacy Guard. Protecting your digital privacy.</p>
+        </div>
       </footer>
     </div>
-  );
+  )
 }
