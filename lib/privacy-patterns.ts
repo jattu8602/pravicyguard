@@ -1,4 +1,4 @@
-const PRIVACY_RISK_PATTERNS = [
+export const PRIVACY_RISK_PATTERNS = [
   /(?:what\s+is\s+your\s+)?(?:phone|mobile|cell)\s*(?:number|#|no|phone)/i,
   /(?:what\s+is\s+your\s+)?(?:email|e-mail)\s*(?:address|addy)/i,
   /(?:what\s+is\s+your\s+)?(?:home|billing|shipping)\s*address/i,
