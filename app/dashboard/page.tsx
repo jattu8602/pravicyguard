@@ -94,27 +94,7 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <Shield className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold text-foreground">
-              Privacy Guard
-            </span>
-          </div>
-          <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="sm">
-              <Settings className="h-4 w-4 mr-2" />
-              Settings
-            </Button>
-            <Button variant="ghost" size="sm">
-              <LogOut className="h-4 w-4 mr-2" />
-              Sign Out
-            </Button>
-          </div>
-        </div>
-      </header>
+
 
       <div className="container mx-auto px-4 py-8">
         {/* Welcome Section */}
@@ -203,10 +183,7 @@ export default function DashboardPage() {
           className="space-y-6"
         >
           <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="monitoring">Monitoring</TabsTrigger>
-            <TabsTrigger value="risks">Risk Analysis</TabsTrigger>
-            <TabsTrigger value="remediation">Remediation</TabsTrigger>
+
           </TabsList>
 
           <TabsContent value="overview" className="space-y-6">
@@ -325,10 +302,10 @@ export default function DashboardPage() {
                     <span className="text-sm">Risky Sites Detected</span>
                     <span className="font-medium">7</span>
                   </div>
-                  <Link href="/dashboard/analytics">
+                  <Link href="/dashboard/remediation">
                     <Button variant="outline" className="w-full bg-transparent">
                       <BarChart3 className="h-4 w-4 mr-2" />
-                      View Analytics
+                      View Remediation
                     </Button>
                   </Link>
                 </CardContent>
@@ -336,71 +313,7 @@ export default function DashboardPage() {
             </div>
           </TabsContent>
 
-          <TabsContent value="monitoring">
-            <Card>
-              <CardHeader>
-                <CardTitle>Website Monitoring</CardTitle>
-                <CardDescription>
-                  Real-time monitoring of all visited websites
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-8">
-                  <Globe className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <p className="text-muted-foreground">
-                    Monitoring logs will be displayed here
-                  </p>
-                  <p className="text-sm text-muted-foreground mt-2">
-                    Visit websites to see real-time monitoring data
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
 
-          <TabsContent value="risks">
-            <Card>
-              <CardHeader>
-                <CardTitle>Risk Analysis</CardTitle>
-                <CardDescription>
-                  AI-powered privacy risk detection and analysis
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-8">
-                  <AlertTriangle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <p className="text-muted-foreground">
-                    Risk analysis dashboard will be displayed here
-                  </p>
-                  <p className="text-sm text-muted-foreground mt-2">
-                    Advanced AI analytics for privacy threats
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="remediation">
-            <Card>
-              <CardHeader>
-                <CardTitle>Remediation Guides</CardTitle>
-                <CardDescription>
-                  Step-by-step guides to protect your privacy
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-8">
-                  <Shield className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <p className="text-muted-foreground">
-                    Remediation guides will be displayed here
-                  </p>
-                  <p className="text-sm text-muted-foreground mt-2">
-                    Get instant help when threats are detected
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
         </Tabs>
       </div>
     </div>

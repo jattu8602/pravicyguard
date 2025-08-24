@@ -169,23 +169,7 @@ export default function MonitoringLogsPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <Shield className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold text-foreground">
-              Privacy Guard
-            </span>
-          </div>
-          <div className="flex items-center space-x-4">
-            <Link href="/dashboard">
-              <Button variant="ghost">Back to Dashboard</Button>
-            </Link>
-          </div>
-        </div>
-      </header>
-
+    
       <div className="container mx-auto px-4 py-8">
         {/* Page Header */}
         <div className="mb-8">

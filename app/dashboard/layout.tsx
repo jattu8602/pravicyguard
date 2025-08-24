@@ -1,7 +1,6 @@
 'use client'
 
 import type React from 'react'
-
 import {
   Shield,
   Home,
@@ -10,16 +9,18 @@ import {
   Settings,
   BarChart3,
   FileText,
+  LogOut,
 } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: Home },
   { name: 'Monitoring', href: '/dashboard/monitoring', icon: Eye },
   { name: 'Risk Analysis', href: '/dashboard/risks', icon: AlertTriangle },
-  { name: 'Analytics', href: '/dashboard/analytics', icon: BarChart3 },
+  { name: 'Remediation', href: '/dashboard/remediation', icon: BarChart3 },
   { name: 'Logs', href: '/dashboard/logs', icon: FileText },
   { name: 'Settings', href: '/dashboard/settings', icon: Settings },
 ]
@@ -74,8 +75,33 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         </div>
       </div>
 
-      {/* Main content */}
-      <div className="flex flex-col flex-1 overflow-hidden">{children}</div>
+      {/* Main area with top nav */}
+      <div className="flex flex-col flex-1 overflow-y-auto">
+        {/* Top Navbar */}
+        <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
+          <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <Shield className="h-6 w-6 text-primary" />
+              <span className="text-xl font-bold text-foreground">
+                Privacy Guard
+              </span>
+            </div>
+            <div className="flex items-center space-x-4">
+              <Button variant="ghost" size="sm">
+                <Settings className="h-4 w-4 mr-2" />
+                Settings
+              </Button>
+              <Button variant="ghost" size="sm">
+                <LogOut className="h-4 w-4 mr-2" />
+                Sign Out
+              </Button>
+            </div>
+          </div>
+        </header>
+
+        {/* Page Content */}
+        <main className="flex-1 p-6">{children}</main>
+      </div>
     </div>
   )
 }
