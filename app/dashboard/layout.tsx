@@ -12,6 +12,8 @@ import {
   Shield,
   Home,
   Eye,
+  MessageCircle,
+  Bot,
   AlertTriangle,
   Settings,
   BarChart3,
@@ -21,6 +23,7 @@ import {
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: Home },
+  { name: 'Simulator', href: '/dashboard/simulator', icon: Bot },
   { name: 'Monitoring', href: '/dashboard/monitoring', icon: Eye },
   { name: 'Risk Analysis', href: '/dashboard/risks', icon: AlertTriangle },
   { name: 'Remediation', href: '/dashboard/remediation', icon: BarChart3 },
