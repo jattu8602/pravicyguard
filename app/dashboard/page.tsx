@@ -11,7 +11,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Tabs, TabsContent, TabsList } from '@/components/ui/tabs'
 import {
   Shield,
   AlertTriangle,
@@ -22,8 +22,6 @@ import {
   CheckCircle,
   XCircle,
   BarChart3,
-  Settings,
-  LogOut,
 } from 'lucide-react'
 import Link from 'next/link'
 
