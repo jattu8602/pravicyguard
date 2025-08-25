@@ -266,7 +266,7 @@ export function BrowserInterface() {
     if (showNetworkExtension) setShowNetworkExtension(false)
   }
 
-  const switchTab = (tab: any) => {
+  const switchTab = (tab: { id: string; url: string; status?: string }) => {
     setActiveTab(tab.id)
     setAddressBar(tab.url)
     setTabs(tabs.map((t) => ({ ...t, active: t.id === tab.id })))
@@ -433,7 +433,7 @@ export function BrowserInterface() {
                     />
                     <div className="flex gap-2 justify-center mt-4">
                       <Button variant="outline">Google Search</Button>
-                      <Button variant="outline">I'm Feeling Lucky</Button>
+                      <Button variant="outline">I&apos;m Feeling Lucky</Button>
                     </div>
                   </div>
                 </div>
@@ -729,8 +729,8 @@ export function BrowserInterface() {
                   {[1, 2, 3, 4, 5, 6].map((i) => (
                     <Card key={i} className="p-4 border-red-200">
                       <p className="text-sm">
-                        "This website is totally legitimate! I won $1000!" -
-                        Fake User {i}
+                        &ldquo;This website is totally legitimate! I won
+                        $1000!&rdquo; - Fake User {i}
                       </p>
                     </Card>
                   ))}
@@ -776,9 +776,14 @@ export function BrowserInterface() {
                       Fake Testimonials
                     </h3>
                     <div className="space-y-2 text-sm">
-                      <p>"I sent 1 BTC and got 2 BTC back!" - Fake User 1</p>
-                      <p>"This is totally legit!" - Bot Account 2</p>
-                      <p>"Made $50,000 in one day!" - Scammer 3</p>
+                      <p>
+                        &ldquo;I sent 1 BTC and got 2 BTC back!&rdquo; - Fake
+                        User 1
+                      </p>
+                      <p>
+                        &ldquo;This is totally legit!&rdquo; - Bot Account 2
+                      </p>
+                      <p>&ldquo;Made $50,000 in one day!&rdquo; - Scammer 3</p>
                     </div>
                   </Card>
                 </div>
@@ -1154,7 +1159,13 @@ export function BrowserInterface() {
             <NetworkLogsExtension
               onClose={() => setShowNetworkExtension(false)}
               onDashboard={() => setShowDashboard(true)}
-              tabStatus={getTabStatus(activeTab) as 'safe' | 'risky' | 'warning' | 'suspicious'}
+              tabStatus={
+                getTabStatus(activeTab) as
+                  | 'safe'
+                  | 'risky'
+                  | 'warning'
+                  | 'suspicious'
+              }
               logs={networkLogs}
             />
           </div>

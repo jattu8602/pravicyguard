@@ -91,7 +91,7 @@ export function ChatBot({
     }
   }
 
-  const generateBotResponse = async (userMessage: string) => {
+  const generateBotResponse = async () => {
     let response = ''
 
     switch (type) {
@@ -168,7 +168,7 @@ export function ChatBot({
 
     // Simulate bot response delay
     setTimeout(async () => {
-      const botResponse = await generateBotResponse(input)
+      const botResponse = await generateBotResponse()
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
         sender: 'bot',

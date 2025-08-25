@@ -215,9 +215,9 @@ export default function HomePage() {
               <Shield className="h-5 w-5" />
               <span>Trusted by 50,000+ users worldwide</span>
             </div>
-            <h1 className="text-6xl md:text-8xl font-bold text-foreground leading-tight">
+            <h1 className="text-6xl md:text-8xl font-bold text-foreground leading-tight ">
               Protect Your Privacy
-              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent block">
+              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent block ">
                 Across Every Website
               </span>
             </h1>

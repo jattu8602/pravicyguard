@@ -12,7 +12,6 @@ import {
   Shield,
   Home,
   Eye,
-  MessageCircle,
   Bot,
   AlertTriangle,
   Settings,
@@ -36,7 +35,11 @@ interface DashboardLayoutProps {
 }
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
-  const [dummyUser, setDummyUser] = useState<any>(null)
+  const [dummyUser, setDummyUser] = useState<{
+    id: string
+    email: string
+    username?: string
+  } | null>(null)
   const router = useRouter()
   const pathname = usePathname()
   const { showInfo } = useToast()
