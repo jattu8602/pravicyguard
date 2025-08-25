@@ -76,7 +76,7 @@ export default function LoginPage() {
               <Shield className="h-8 w-8 text-primary" />
             </div>
           </div>
-          <h1 className="text-2xl font-bold text-foreground">Privacy Guard</h1>
+          <h1 className="text-2xl font-bold text-foreground">SCANSHIELD</h1>
           <p className="text-muted-foreground">
             Secure login for web app and extension
           </p>
@@ -182,7 +182,7 @@ export default function LoginPage() {
         </Card>
 
         <div className="text-center text-xs text-muted-foreground">
-          Protected by Privacy Guard security protocols
+          Protected by SCANSHIELD security protocols
         </div>
       </div>
     </div>

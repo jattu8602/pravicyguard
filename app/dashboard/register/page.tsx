@@ -65,7 +65,7 @@ export default function RegisterPage() {
     await new Promise((resolve) => setTimeout(resolve, 1500))
 
     // Dummy registration - always successful
-    showSuccess('Account created successfully! Welcome to Privacy Guard!')
+    showSuccess('Account created successfully! Welcome to SCANSHIELD!')
 
     // Store dummy user data in localStorage for settings page
     localStorage.setItem(
@@ -96,7 +96,7 @@ export default function RegisterPage() {
               <Shield className="h-8 w-8 text-primary" />
             </div>
           </div>
-          <h1 className="text-2xl font-bold text-foreground">Privacy Guard</h1>
+          <h1 className="text-2xl font-bold text-foreground">SCANSHIELD</h1>
           <p className="text-muted-foreground">Create your secure account</p>
         </div>
 

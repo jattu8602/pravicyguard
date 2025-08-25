@@ -93,7 +93,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           <div className="flex items-center flex-shrink-0 px-4">
             <Shield className="h-8 w-8 text-primary" />
             <span className="ml-2 text-xl font-bold text-sidebar-foreground">
-              Privacy Guard
+              SCANSHIELD
             </span>
           </div>
           <div className="mt-8 flex-grow flex flex-col">
@@ -136,7 +136,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             <div className="flex items-center space-x-2">
               <Shield className="h-6 w-6 text-primary" />
               <span className="text-xl font-bold text-foreground">
-                Privacy Guard
+                SCANSHIELD
               </span>
             </div>
             <div className="flex items-center space-x-4">

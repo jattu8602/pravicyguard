@@ -192,7 +192,7 @@ export default function HomePage() {
               <Shield className="h-6 w-6 text-primary" />
             </div>
             <span className="text-xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
-              Privacy Guard
+              SCANSHIELD
             </span>
           </div>
           <div className="flex items-center space-x-4">
@@ -473,8 +473,8 @@ export default function HomePage() {
                   ))}
                 </div>
                 <p className="text-muted-foreground mb-4 italic text-sm leading-relaxed">
-                  &ldquo;Privacy Guard has completely transformed how I browse
-                  the web. The real-time alerts and remediation guides are
+                  &ldquo;SCANSHIELD has completely transformed how I browse the
+                  web. The real-time alerts and remediation guides are
                   incredibly helpful.&rdquo;
                 </p>
                 <div className="flex items-center space-x-3">
@@ -535,7 +535,7 @@ export default function HomePage() {
                   ))}
                 </div>
                 <p className="text-muted-foreground mb-4 italic text-sm leading-relaxed">
-                  &ldquo;As someone who works with sensitive data, Privacy Guard
+                  &ldquo;As someone who works with sensitive data, SCANSHIELD
                   gives me peace of mind. The browser extension is
                   seamless.&rdquo;
                 </p>
@@ -563,7 +563,7 @@ export default function HomePage() {
         <div className="container mx-auto">
           <div className="text-center space-y-8 mb-20">
             <h2 className="text-5xl font-bold text-foreground">
-              How Privacy Guard Works
+              How SCANSHIELD Works
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               Simple setup, powerful protection in just three easy steps
@@ -626,7 +626,7 @@ export default function HomePage() {
               Ready to Take Control of Your Privacy?
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Join thousands of users who trust Privacy Guard to keep their data
+              Join thousands of users who trust SCANSHIELD to keep their data
               safe across the web. Start your free trial today.
             </p>
           </div>
@@ -668,7 +668,7 @@ export default function HomePage() {
               <div className="flex items-center space-x-3">
                 <Shield className="h-7 w-7 text-primary" />
                 <span className="text-2xl font-bold text-foreground">
-                  Privacy Guard
+                  SCANSHIELD
                 </span>
               </div>
               <p className="text-lg text-muted-foreground leading-relaxed">
@@ -734,7 +734,7 @@ export default function HomePage() {
 
           <div className="border-t pt-12 text-center text-lg text-muted-foreground">
             <p>
-              &copy; 2024 Privacy Guard. All rights reserved. Protecting your
+              &copy; 2024 SCANSHIELD. All rights reserved. Protecting your
               digital privacy.
             </p>
           </div>

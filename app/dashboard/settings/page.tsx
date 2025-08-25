@@ -487,7 +487,7 @@ export default function SettingsPage() {
                         <div className="space-y-1">
                           <p className="font-medium">Data Collection</p>
                           <p className="text-sm text-muted-foreground">
-                            Allow Privacy Guard to collect usage data for
+                            Allow SCANSHIELD to collect usage data for
                             improvements
                           </p>
                         </div>

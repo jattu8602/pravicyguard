@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Privacy Guard - Protect Your Online Privacy',
+  title: 'SCANSHIELD - Protect Your Online Privacy',
   description: 'Monitor your online privacy and security across all websites',
 }
 
